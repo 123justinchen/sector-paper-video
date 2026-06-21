@@ -73,6 +73,13 @@ pip install uiautomation
 3. `%LOCALAPPDATA%\JianyingPro\Apps\<版本号>\JianyingPro.exe`（版本子目录）
 4. 兜底全盘扫描
 
+如果自动探测失败，手动修改 `sector-paper-video/scripts/jianying_ai_video.py`，将第 1 步中的路径替换为你的实际安装路径：
+
+```python
+# 1) 直接路径（无版本子目录的安装）
+direct = Path(r'你的安装路径\JianyingPro.exe')
+```
+
 验证安装：打开一次剪映确认正常启动即可，脚本后续会自行调起。
 
 ## 使用
