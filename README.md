@@ -68,9 +68,10 @@ pip install uiautomation
 
 从 https://www.capcut.cn/ 下载安装。脚本自动按以下顺序探测安装路径：
 
-1. 注册表 `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall` 中搜索"剪映"
-2. 默认路径 `%LOCALAPPDATA%\JianyingPro\Apps\<版本号>\JianyingPro.exe`（覆盖绝大多数安装）
-3. 兜底全盘扫描
+1. 直接路径 `%LOCALAPPDATA%\JianyingPro\Apps\JianyingPro.exe`（覆盖绝大多数安装）
+2. 注册表中搜索"剪映"卸载信息
+3. `%LOCALAPPDATA%\JianyingPro\Apps\<版本号>\JianyingPro.exe`（版本子目录）
+4. 兜底全盘扫描
 
 验证安装：打开一次剪映确认正常启动即可，脚本后续会自行调起。
 
