@@ -30,7 +30,7 @@ COORDS_AI = {
 # 自动探测 & 启动剪映
 # ============================================================
 def detect_jy_exe():
-    """探测最新版剪映 exe，优先级: 注册表 > 默认安装路径 > 扫描"""
+    """探测最新版剪映 exe，优先级: 注册表 > 直接路径 > 版本子目录 > 全盘扫描"""
     # 1) 从注册表找卸载信息（最准确）
     try:
         cmd = 'reg query "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall" /s /f "剪映" 2>nul'
@@ -42,7 +42,12 @@ def detect_jy_exe():
     except:
         pass
 
-    # 2) 默认安装路径
+    # 2) 直接路径（无版本子目录的安装）
+    direct = Path.home() / 'AppData/Local/JianyingPro/Apps/JianyingPro.exe'
+    if direct.exists():
+        return direct
+
+    # 3) 默认安装路径（含版本子目录）
     defaults = [
         Path.home() / 'AppData/Local/JianyingPro/Apps',
         Path('C:/Program Files/JianyingPro/Apps'),
@@ -61,7 +66,7 @@ def detect_jy_exe():
                 versions.sort(key=lambda v: [int(x) for x in v[0].split('.')], reverse=True)
                 return versions[0][1]
 
-    # 3) 全盘扫描（慢，兜底）
+    # 4) 全盘扫描（慢，兜底）
     for root in [Path.home(), Path('C:/')]:
         try:
             for p in root.rglob('JianyingPro.exe'):
